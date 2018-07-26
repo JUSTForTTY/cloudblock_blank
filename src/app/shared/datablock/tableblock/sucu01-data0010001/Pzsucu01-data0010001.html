@@ -1,0 +1,352 @@
+<form [formGroup]="datatable_options">
+    <nz-tabset>
+        <nz-tab nzTitle="数据">
+            <div class="panel1" *ngIf="showpanel1">
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzOffset="1" nzRequired nzFor="">绑定数据表</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzOffset="2">
+                        <nz-select formControlName="table_name" [nzSize]="small" nzShowSearch nzAllowClear nzPlaceHolder="Select a table" 
+                        [(ngModel)]="selectedValue"
+                            (ngModelChange)="tableChange()">
+                            <nz-option *ngFor="let option of listOfTbaleOption" [nzLabel]="option.cySysViewExplainDesc" [nzValue]="option.cySysViewExplainName">
+                            </nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label nzOffset="1" nzRequired nzFor="">绑定字段</nz-form-label>
+                    <vantercTree [dataSource]="dataSource" title="全选" (editClick)="editclick($event)" (itemchecked)="itemchecked($event)" (eyeClick)="eyeClick($event)"></vantercTree>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-control [nzSpan]="12" nzOffset="8">
+                        <button nz-button [nzSize]="small" nzType="primary" (click)="onClickNext()">下一步</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div class="panel2" *ngIf="showpanel2">
+                <label nz-col nzOffset="8">{{selectfield.label}}</label>
+                <nz-divider></nz-divider>
+                <ng-container *ngIf="'image'!=this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['type']">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="6" nzOffset="1" nzFor="">可排序</nz-form-label>
+                        <nz-form-control [nzSpan]="4">
+                            <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableData']['ColumnDate'][selectfield.value]['isSort']"
+                                formControlName="colunm_sort"></nz-switch>
+                        </nz-form-control>
+                        <nz-form-label [nzSpan]="6" nzOffset="1" nzFor="">可筛选</nz-form-label>
+                        <nz-form-control [nzSpan]="4">
+                            <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableData']['ColumnDate'][selectfield.value]['isFilter']"
+                                formControlName="colunm_screen"></nz-switch>
+                        </nz-form-control>
+                    </nz-form-item>
+                </ng-container>
+
+                <nz-form-item *ngIf="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['attribute']=='0'">
+                    <nz-form-label [nzSpan]="6" nzOffset="1" nzFor="">可编辑</nz-form-label>
+                    <nz-form-control [nzSpan]="4">
+                        <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['isEdit']"
+                            formControlName="colunm_editable"></nz-switch>
+                    </nz-form-control>
+
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">列间距</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzOffset="2">
+                        <nz-input-number formControlName="colunm_spacing" [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['width']"
+                            [nzMin]="0" [nzMax]="500" [nzStep]="10" [nzFormatter]="formatterPx" [nzParser]="parserPx"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">序号</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzOffset="2">
+                        <nz-input-number formControlName="colunm_number" [(ngModel)]="ColumnSort" (ngModelChange)="changeColumnSort($event)" [nzMin]="1"
+                            [nzMax]="this.newTableColumn.length" [nzStep]="1" [nzParser]="parserPercent"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">对齐方式</nz-form-label>
+                    <nz-form-control [nzSpan]="14">
+                        <nz-radio-group [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['alignType']"
+                            [nzSize]="'default'" formControlName="colunm_align">
+                            <label nz-radio-button nzValue="left">左</label>
+                            <label nz-radio-button nzValue="center">中</label>
+                            <label nz-radio-button nzValue="right">右</label>
+                        </nz-radio-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-divider></nz-divider>
+                <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">数据类型</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzOffset="2">
+                        <nz-select formControlName="table_datarows3" 
+                        [nzSize]="small" nzShowSearch nzPlaceHolder="Select a type" 
+                        [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['type']"
+                            (ngModelChange)="changeType($event)">
+                            <nz-option *ngFor="let option of typeGroups" [nzLabel]="option.key" [nzValue]="option.value"></nz-option>
+                        </nz-select>
+                    </nz-form-control>
+                </nz-form-item>
+                <ng-container [ngSwitch]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['type']">
+                    <ng-container *ngSwitchCase="'numerical'">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8" nzOffset="1">数值格式</nz-form-label>
+                            <nz-form-control [nzSpan]="12" nzOffset="2">
+                                <input nz-input [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['format']"
+                                    placeholder="3.2-4" formControlName="numerical_format" type="text">
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                                <nz-form-label nzRequired [nzSpan]="8" nzOffset="1" nzFor="proj_name">页脚名称</nz-form-label>
+                                <nz-form-control [nzSpan]="12" nzOffset="1">
+                                    <input nz-input formControlName="table_footerNname" type="text" 
+                                    [(ngModel)]="this.settestService.blocksort[this.id].sets['tableStyle']['footerName']"
+                                        >
+                                </nz-form-control>
+                            </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="6" nzOffset="1" nzFor="">计算逻辑</nz-form-label>
+                            <nz-form-control nzOffset="1">
+                                <nz-radio-group [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['footer']" formControlName="colunm_calculation">
+                                    <label nz-radio [nzValue]="o.value" *ngFor="let o of footerOptions">{{o.label}}</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                        
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'image'">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">图片大小</nz-form-label>
+                            <nz-form-control [nzSpan]="14">
+                                <nz-radio-group [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['format']"
+                                    [nzSize]="'default'" formControlName="image_size">
+                                    <label nz-radio-button nzValue="small">小</label>
+                                    <label nz-radio-button nzValue="middle">中</label>
+                                    <label nz-radio-button nzValue="large">大</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'date'">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="8" nzOffset="1">日期格式</nz-form-label>
+                            <nz-form-control [nzSpan]="12" nzOffset="2">
+                                <input nz-input [(ngModel)]="this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['format']"
+                                    placeholder="yyyy-MM-dd HH:mm:ss,GMT+8" formControlName="date_format" type="text">
+                            </nz-form-control>
+                        </nz-form-item>
+                    </ng-container>
+                </ng-container>
+                <nz-divider nzText="样式设置"></nz-divider>
+                <nz-collapse [nzBordered]="false">
+                        <nz-collapse-panel *ngFor="let panel of this.settestService.blocksort[this.id].sets['tableData']['ColumnDate'][selectfield.value]['style'];let i = index" [nzHeader]="panel.name" [nzActive]="panel.active">
+                            <nz-form-item>
+                                <nz-form-label [nzSpan]="4" nzOffset="1" nzFor="proj_name">条件</nz-form-label>
+                                <nz-form-control [nzSpan]="18" nzOffset="1">
+                                    <textarea [nzAutosize]="{ minRows: 2, maxRows: 5 }" 
+                                    [formControlName]="panel.controlInstance['conditions']"
+                                    [(ngModel)]="panel.conditions"
+                                     nz-input ></textarea>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                    <nz-form-label [nzSpan]="4" nzOffset="1" nzFor="proj_name">样式</nz-form-label>
+                                    <nz-form-control [nzSpan]="18" nzOffset="1">
+                                        <textarea [nzAutosize]="{ minRows: 2, maxRows: 5 }" 
+                                        [formControlName]="panel.controlInstance['styles']"
+                                        [(ngModel)]="panel.styles"
+                                         nz-input 
+                                         placeholder=' {
+                                            "type":"number/string",
+                                            "color":"#ff00ff",
+                                            "icon":"success/error/default/processing/warning"
+                                            }'
+                                         ></textarea>
+                                    </nz-form-control>
+                                </nz-form-item>
+                
+  
+                        </nz-collapse-panel>
+                    </nz-collapse>
+                    <nz-form-item>
+                            <nz-form-control [nzSpan]="12" nzOffset="10">
+                                <button nz-button [nzSize]="small" nzType="default" nzShape="circle" (click)="addStyle($event)">
+                                    <i class="anticon anticon-plus"></i>
+                                </button>
+                            </nz-form-control>
+                        </nz-form-item>
+
+                <nz-form-item>
+                    <nz-form-control [nzSpan]="12" nzOffset="9">
+                        <button nz-button (click)="panel2save()" [nzSize]="small" nzType="primary">保存</button>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+        </nz-tab>
+        <nz-tab nzTitle="样式">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="5" nzOffset="1" nzFor="">分页</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['nzShowPagination']"
+                        formControlName="table_position"></nz-switch>
+                </nz-form-control>
+
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzFor="">显示条数</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-select formControlName="table_datarows" [nzSize]="small" nzShowSearch nzPlaceHolder="Select a group" [(ngModel)]="pageGroupsValue"
+                        (ngModelChange)="pageGroupsChange()">
+                        <nz-option *ngFor="let option of pageGroups" [nzLabel]="option" [nzValue]="option"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzFor="">分页跳转</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['nzShowQuickJumper']"
+                        formControlName="table_jump"></nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-divider></nz-divider>
+            <nz-form-item>
+                <nz-form-label nzRequired [nzSpan]="8" nzOffset="1" nzFor="proj_name">表头名称</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <input nz-input formControlName="table_columnNname" type="text" [(ngModel)]="this.settestService.blocksort[this.id].sets['tableStyle']['nzTitle']"
+                        id="proj_name">
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="6" nzOffset="1" nzFor="">可选框</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['nzShowCheckbox']"
+                        formControlName="table_selectable"></nz-switch>
+                </nz-form-control>
+                <nz-form-label [nzSpan]="6" nzOffset="1" nzFor="">列边框</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-switch [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['nzBordered']" nzCheckedChildren="开"
+                        nzUnCheckedChildren="关" formControlName="table_colunmborder"></nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzFor="">固定表头</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['nzScroll']"
+                        formControlName="table_fiexdhead"></nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="5" nzOffset="1" nzFor="">大小</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzOffset="4">
+                    <nz-radio-group formControlName="table_spacing" (ngModelChange)="autoSetValue('nzSize',$event,'间距：')" [nzSize]="'small'">
+                        <label nz-radio-button nzValue="default">默认</label>
+                        <label nz-radio-button nzValue="middle">中</label>
+                        <label nz-radio-button nzValue="small">小</label>
+                    </nz-radio-group>
+                </nz-form-control>
+
+
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzFor="">自动加载</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-switch nzCheckedChildren="开" nzUnCheckedChildren="关" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['timer']['used']"
+                        (ngModelChange)="setTimer()" formControlName="table_autoloading"></nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item *ngIf="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['timer']['used']">
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">心跳</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-input-number formControlName="table_divspacing" [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['tableStyle']['timer']['time']"
+                        [nzMin]="1" [nzMax]="100" [nzStep]="1" [nzFormatter]="formatterTime" [nzParser]="parserTime"></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control [nzSpan]="12" nzOffset="8">
+                    <button nz-button [nzSize]="small" nzType="primary">保存</button>
+                </nz-form-control>
+            </nz-form-item>
+        </nz-tab>
+        <nz-tab nzTitle="操作组">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">操作位置</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <nz-radio-group 
+                    formControlName="table_operatingPosition" 
+                    (ngModelChange)="autoSetValue('operationsPosition',$event,'操作位置:')"
+                    [nzSize]="'middle'">
+                        <label nz-radio-button nzValue="front">前</label>
+                        <label nz-radio-button nzValue="back">后</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                    <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">列宽</nz-form-label>
+                    <nz-form-control [nzSpan]="12" nzOffset="2">
+                        <nz-input-number formControlName="colunm_spacing2" 
+                        [(ngModel)]="this.settestService.blocksort[this.id].sets['tableStyle']['operationWidth']"
+                            [nzMin]="0" [nzMax]="500" [nzStep]="10" [nzFormatter]="formatterPx" [nzParser]="parserPx"></nz-input-number>
+                    </nz-form-control>
+                </nz-form-item>
+            <nz-collapse [nzBordered]="false">
+                <nz-collapse-panel *ngFor="let panel of panels;let i = index" [nzHeader]="panel.name" [nzActive]="panel.active">
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="proj_name">操作名称</nz-form-label>
+                        <nz-form-control [nzSpan]="14" nzOffset="1">
+                            <input nz-input [formControlName]="panel.controlInstance['name']" 
+                            [(ngModel)]="panel.name"
+                            type="text" id="proj_name">
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">操作逻辑</nz-form-label>
+                        <nz-form-control [nzSpan]="14" nzOffset="1">
+                                <nz-select [formControlName]="panel.controlInstance['type']" 
+                                [nzSize]="small" nzShowSearch nzPlaceHolder="Select a type" 
+                                [(ngModel)]="panel.type"
+                                    >
+                                    <nz-option *ngFor="let option of operationsArray" [nzLabel]="option.cySysBlockName" [nzValue]="option.cySysBlockName"></nz-option>
+                                </nz-select>
+
+                        </nz-form-control>
+                    </nz-form-item>
+                    <nz-form-item *ngIf="panel.type=='编辑-弹框'||panel.type=='查询-弹框'">
+                            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">弹框页面</nz-form-label>
+                            <nz-form-control [nzSpan]="14" nzOffset="1">
+                                    <nz-select [formControlName]="panel.controlInstance['page']" 
+                                    [nzSize]="small" nzShowSearch nzPlaceHolder="Select a page" 
+                                    [(ngModel)]="panel.page"
+                                        >
+                                        <nz-option *ngFor="let option of this.settestService.builtiInDataSource[1]['children']" [nzLabel]="option.label" [nzValue]="option.label"></nz-option>
+                                    </nz-select>
+    
+                            </nz-form-control>
+                        </nz-form-item>
+                    <nz-form-item>
+                        <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="proj_name">字体颜色</nz-form-label>
+                        <nz-form-control [nzSpan]="14" nzOffset="1">
+                            <input nz-input 
+                            [formControlName]="panel.controlInstance['color']" 
+                            [(ngModel)]="panel.color"
+                            type="text" id="proj_name">
+                        </nz-form-control>
+                    </nz-form-item>
+                </nz-collapse-panel>
+            </nz-collapse>
+            <nz-form-item>
+                <nz-form-control [nzSpan]="12" nzOffset="10">
+                    <button nz-button [nzSize]="small" nzType="default" nzShape="circle" (click)="addField($event)">
+                        <i class="anticon anticon-plus"></i>
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-control [nzSpan]="12" nzOffset="9">
+                    <button nz-button [nzSize]="small" nzType="primary">完成</button>
+                </nz-form-control>
+            </nz-form-item>
+
+        </nz-tab>
+    </nz-tabset>
+</form>

@@ -1,0 +1,3 @@
+<nz-tooltip nzTrigger="focus" nzPlacement="topLeft" nzOverlayClassName="numeric-input" [nzTitle]="title">
+    <input type="password" #inputElement nz-input nz-tooltip placeholder="Input a password(4到16位（字母，数字，下划线，减号）)" [ngModel]="value" (ngModelChange)="onChange($event)" (blur)="onBlur()">
+  </nz-tooltip>

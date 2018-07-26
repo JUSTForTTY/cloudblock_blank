@@ -1,0 +1,10 @@
+<div class="container">
+    <h1>
+      Welcome to {{title}}!
+    </h1>
+    <baidu-map [options]="options" >
+      <marker [point]="point"></marker>
+      <control type="navigation" [options]="navOptions"></control>
+      <control type="scale" [options]="scale"></control>
+    </baidu-map>
+  </div>

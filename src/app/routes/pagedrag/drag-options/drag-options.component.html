@@ -1,0 +1,151 @@
+<nz-layout>
+
+        <nz-sider nzWidth="270" nzCollapsible [(nzCollapsed)]="isliftCollapsed" [nzTrigger]="null" [nzCollapsedWidth]="36">
+                <ng-template #liftextraTemplate>
+                        <i class="anticon leftCollapsedbtn" [class.anticon-left]="!isliftCollapsed" [class.anticon-right]="isliftCollapsed" (click)="isliftCollapsed=!isliftCollapsed"></i>
+                </ng-template>
+                <nz-tabset nzTabPosition="right" [nzType]="'card'" [nzTabBarExtraContent]="liftextraTemplate">
+                        <nz-tab nzTitle="{{draggableListLeftCategoryitem.cySysLayoutCategoryName}}" *ngFor="let draggableListLeftCategoryitem of settestService.draggableListLeftCategory;let categoryIndex = index;">
+                                <ul nz-menu [nzMode]="'inline'" #jmlb class="dndList" dndDropzone nzTheme="light">
+                                        <li *ngFor="let item of settestService.blockLeft[settestService.draggableListLeftCategory[categoryIndex].cySysLayoutCategoryId]"
+                                                nz-menu-item [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable">
+                                                {{item.content}}
+                                        </li>  
+                                        <ng-container *ngFor="let category of settestService.draggableListLeftCategory[categoryIndex].child">
+                                                <li nz-submenu nzOpen="true">
+                                                        <span title>{{category.cySysLayoutCategoryName}}</span>
+                                                        <ul>
+                                                                <ng-container *ngFor="let item of settestService.blockLeft[category.cySysLayoutCategoryId]">
+                                                                                <div class="blockliststyle">
+                                                                        <li nz-menu-item [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable">
+                                                                                <img src="../../../..{{item.icon}}"  />
+                                                                                
+                                                                        </li>
+                                                                        <span>{{item.content}}</span>
+                                                                        </div>
+                                                                </ng-container>
+
+                                                                <ng-container *ngIf="category.child.length!=0">
+                                                                        <li nz-submenu nzOpen="true" *ngFor="let categoryitem of category.child">
+                                                                                <span title>{{categoryitem.cySysLayoutCategoryName}}</span>
+                                                                                <ul>
+                                                                                        <ng-container *ngFor="let item of settestService.blockLeft[categoryitem.cySysLayoutCategoryId]">
+                                                                                                        <div class="blockliststyle">
+                                                                                                <li nz-menu-item [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable">
+                                                                                                        <img src="../../../..{{item.icon}}"  />
+                                                                                                        
+                                                                                                </li>
+                                                                                                <span>{{item.content}}</span>
+                                                                                                </div>
+                                                                                                
+                                                                                        </ng-container>
+
+                                                                                </ul>
+                                                                        </li>
+
+                                                                </ng-container>
+
+                                                        </ul>
+                                                </li>
+                                        </ng-container>
+                                </ul>
+
+                        </nz-tab>
+                        <nz-tab nzTitle="{{item.cySysBlockCategoryName}}" *ngFor="let item of settestService.draggableListLeftBlockCategory;let categoryblockIndex = index;">
+                                <ul nz-menu [nzMode]="'inline'" #jmlb class="dndList" dndDropzone nzTheme="light">
+                                        <li *ngFor="let item of settestService.blockLeftBlock[settestService.draggableListLeftBlockCategory[categoryblockIndex].cySysBlockCategoryId]"
+                                                nz-menu-item [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable">
+                                                {{item.content}}
+                                        </li>
+                                        <ng-container *ngFor="let category of settestService.draggableListLeftBlockCategory[categoryblockIndex].child">
+                                                <li nz-submenu nzOpen="true">
+                                                        <span title>{{category.cySysBlockCategoryName}}</span>
+                                                        <ul>
+                                                                <ng-container *ngFor="let item of settestService.blockLeftBlock[category.cySysBlockCategoryId]">
+                                                                        <div class="blockliststyle">
+                                                                        <li  nz-menu-item [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable">
+                                                                                <img src="../../../..{{item.icon}}"  />
+                                                                                
+                                                                        </li>
+                                                                        <span>{{item.content}}</span>
+                                                                        </div>
+                                                                </ng-container>
+
+                                                                <ng-container *ngIf="category.child.length!=0">
+                                                                        <li nz-submenu nzOpen="true" *ngFor="let categoryitem of category.child">
+                                                                                <span title>{{categoryitem.cySysBlockCategoryName}}</span>
+                                                                                <ul>
+                                                                                        <ng-container *ngFor="let item of settestService.blockLeftBlock[categoryitem.cySysBlockCategoryId]">
+                                                                                                        <div class="blockliststyle">
+                                                                                                <li  nz-menu-item [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable">
+                                                                                                        <img src="../../../..{{item.icon}}"  />
+                                                                                                        
+                                                                                                </li>
+                                                                                                <span>{{item.content}}</span>
+                                                                                                </div>
+                                                                                        </ng-container>
+
+                                                                                </ul>
+                                                                        </li>
+
+                                                                </ng-container>
+
+                                                        </ul>
+                                                </li>
+                                        </ng-container>
+
+
+                                </ul>
+                        </nz-tab>
+                </nz-tabset>
+
+
+
+        </nz-sider>
+        <nz-content>
+
+                <nz-divider *ngIf="settestService.isAbleEdit==true" nzText="{{this.settestService.page['cySysPageName']}} "></nz-divider>
+
+                <div dndDropzone class="dndList" *ngIf="settestService.isAbleEdit==true" style="width:100%;border: 0px solid black;min-height:500px;"
+                        (dndDrop)="onDrop($event,settestService.draggableListRight) ">
+
+                         
+                        <li dndPlaceholderRef class="dndPlaceholder"></li>
+                        <div #comps *ngFor="let item of settestService.draggableListRight" class="compslists" [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed"
+                                [dndDisableIf]="item.disable" (dndLinked)="onDraggableLinked($event)" (dndMoved)="this.drag.onDraggedLayout(item, settestService.draggableListRight, 'move')"
+                                (click)="this.drag.onClickLayout(item.sysid)">
+
+                                <ng-container *ngComponentOutlet="compshtmlcode[item.htmlcode]"></ng-container>
+                        </div>
+                </div>
+
+        </nz-content>
+
+        <div class="righttopmincollapsedbtn">
+                <i class="anticon" [class.anticon-left]="isrightCollapsed" [class.anticon-right]="!isrightCollapsed" (click)="isrightCollapsed=!isrightCollapsed"></i>
+        </div>
+        <nz-sider nzWidth="270" nzCollapsible [(nzCollapsed)]="isrightCollapsed" [nzTrigger]="null" [nzCollapsedWidth]="0">
+                <div class="righttopcollaspseddiv">
+                        <i class="anticon" [class.anticon-left]="isrightCollapsed" [class.anticon-right]="!isrightCollapsed" (click)="isrightCollapsed=!isrightCollapsed"></i>
+                </div>
+
+                <ng-container *ngIf="settestService.rightid!=0">
+                        <ng-container *ngIf="settestService.rightid!=-100; else elseBlock">
+                                <nz-tag [nzColor]="'geekblue'"> 编号：{{settestService.rightid}}</nz-tag>
+
+
+
+                                <br>
+                                <ng-container *ngComponentOutlet="this.drag.rightcompshtmlcode[settestService.blocksort[settestService.rightid].righthtmlcode]"></ng-container>
+
+                        </ng-container>
+
+                        <ng-template #elseBlock>
+                                <app-rightmenu></app-rightmenu>
+                        </ng-template>
+
+                </ng-container>
+
+        </nz-sider>
+
+</nz-layout>

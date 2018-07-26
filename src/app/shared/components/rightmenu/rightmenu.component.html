@@ -1,0 +1,134 @@
+<form [formGroup]="pageMenu">
+
+
+    <div *ngIf="showindex">
+        <div>
+            <label style="margin-left:10px;">
+                <i class="anticon anticon-laptop" style="margin-right:10px;"></i>页面导航</label>
+            <label class="rightcreatebtn">
+                <i class="anticon anticon-folder-add" style="margin-right:10px;"  (click)="createMenu()"></i>
+                <i class="anticon anticon-file-add" (click)="createPage()"></i>
+            </label>
+        </div>
+        <nz-divider></nz-divider>
+        <nz-form-item>
+            <vantercTree2 (itemClick)="menuClick($event)" (editClick)="editClick($event)" (fatherClick)="fatherClick($event)" [vcCheckable]="vcCheckable"
+                (deleteClick)="deleteClick($event,'menu')" [dataSource]="dataSource"></vantercTree2>
+        </nz-form-item>
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading"
+            nzCancelText='继续' nzOkText='分手'>
+            <p>实施宝宝，确定和我分手？！</p>
+        </nz-modal>
+        <!-- 内置页面 -->
+        <nz-divider></nz-divider>
+        <nz-form-item>
+            <vantercTree2 (itemClick)="pageClick($event)" (editClick)="editPage($event)" (deleteClick)="deleteClick($event,'page')" [vcCheckable]="vcCheckable"
+                [dataSource]="builtiInDataSource"></vantercTree2>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="12" nzOffset="9">
+                <button (click)="release()" nz-button [nzSize]="small" [nzType]="vcCheckable==true ? 'primary' : 'danger'">{{releasebtntext}}</button>
+            </nz-form-control>
+        </nz-form-item>
+
+    </div>
+
+    <div *ngIf="showcreatemenu">
+            <div>
+                    <label style="margin-left:10px;">
+                        <i class="anticon anticon-folder-add" style="margin-right:10px;"></i>创建菜单</label>
+                </div>
+                <nz-divider></nz-divider>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">菜单名称</nz-form-label>
+            <nz-form-control [nzSpan]="13">
+                <input [(ngModel)]="menuName" (ngModelChange)="checkMeun(1)" nz-input formControlName="menu_name" type="text" id="">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">父级菜单</nz-form-label>
+            <nz-form-control [nzSpan]="13">
+                <nz-select formControlName="parent_menu" [nzSize]="small" [(ngModel)]="selectedFarther" (ngModelChange)="menuChange($event)"
+                    nzShowSearch nzPlaceHolder="Select a menu">
+                    <nz-option nzLabel="无" nzValue="-1"></nz-option>
+                    <nz-option *ngFor="let option of dataSource;let i=index" [nzLabel]="option.label" [nzValue]="i+''">
+                    </nz-option>
+                </nz-select>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">菜单图标</nz-form-label>
+            <nz-form-control [nzSpan]="13">
+                <input [(ngModel)]="menuIcon" nz-input formControlName="menu_icon" type="text" id="">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">菜单排序</nz-form-label>
+            <nz-form-control [nzSpan]="12" nzOffset="2">
+                <nz-input-number formControlName="menu_sort" [(ngModel)]="menuSort" [nzMin]="1" [nzMax]="10000" [nzStep]="1" [nzParser]="parserPercent"></nz-input-number>
+            </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!isEditMenu">
+            <nz-divider nzText="页面设置"></nz-divider>
+            <nz-form-control [nzSpan]="13" nzOffset="3">
+                <label formControlName="auto_page" nz-checkbox [(ngModel)]="autoPage" (ngModelChange)="checkMeun()">自动生成页面</label>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item *ngIf="autoPage; else elseBlock">
+            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">页面名称</nz-form-label>
+            <nz-form-control [nzSpan]="13">
+                <input [(ngModel)]="pageName" (ngModelChange)="checkMeun()" nz-input formControlName="page_name_meun" type="text" id="">
+            </nz-form-control>
+        </nz-form-item>
+
+        <ng-template #elseBlock>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">选择页面</nz-form-label>
+                <nz-form-control [nzSpan]="13">
+                    <nz-select formControlName="parent_page" [nzSize]="small" nzShowSearch nzPlaceHolder="Select a page" [(ngModel)]="selectPageIndex">
+                        <nz-option *ngFor="let option of pageDataSource;let i=index" [nzLabel]="option.cySysPageName" [nzValue]="option.cySysPageId">
+                        </nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </ng-template>
+
+        <nz-form-item>
+            <nz-form-control [nzSpan]="12" nzOffset="7">
+                <button (click)="menuReturn('return')" nz-button [nzSize]="small" style="margin-right:10px;" nzType="primary">返回</button>
+                <button (click)="menuReturn(isEditMenu?'edit':'submit')" nz-button [nzSize]="small" nzType="primary" [disabled]="disableSubmit">确认</button>
+            </nz-form-control>
+        </nz-form-item>
+
+    </div>
+    <div *ngIf="showcreatepage">
+            <div>
+                    <label style="margin-left:10px;">
+                        <i class="anticon anticon-file-add" style="margin-right:10px;"></i>创建页面</label>
+                </div>
+                <nz-divider></nz-divider>
+        <nz-form-item>
+            <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">页面名称</nz-form-label>
+            <nz-form-control [nzSpan]="13">
+                <input nz-input [(ngModel)]="pageNamePage" (ngModelChange)="checkPage()" formControlName="page_name" type="text" id="">
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="22" nzOffset="4">
+                <nz-radio-group [(ngModel)]="pageType" [nzSize]="'default'" formControlName="page_type">
+                    <label nz-radio-button nzValue="1">内置页面</label>
+                    <label nz-radio-button nzValue="2">弹框页面</label>
+                </nz-radio-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control [nzSpan]="12" nzOffset="7">
+                <button (click)="pageReturn('return')" nz-button [nzSize]="small" style="margin-right:10px;" nzType="primary">返回</button>
+                <button (click)="pageReturn(isEditPage?'edit':'submit')" nz-button [nzSize]="small" nzType="primary" [disabled]="disablePageSubmit">确认</button>
+            </nz-form-control>
+        </nz-form-item>
+
+    </div>
+</form>

@@ -1,0 +1,126 @@
+<form [formGroup]="weiget_options">
+    <nz-tabset>
+        <nz-tab nzTitle="数据">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">表单数据表</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-select formControlName="weiget_datatables" style="width: 100%" 
+                    nzShowSearch
+                    [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['style']['table']"
+                    (ngModelChange)="onTableChange($event)"
+                    [nzSize]="size" nzMode="multiple" nzPlaceHolder="Please select">
+                        <nz-option *ngFor="let option of this.settestService.linkInfo['table']" [nzLabel]="option.name" [nzValue]="option.value"></nz-option>
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item *ngFor="let table of this.settestService.blocksort[this.settestService.rightid].sets['style']['table'];let i = index">
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">表{{table.substr(-4)}}:字段</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-select [formControlName]="table" 
+                    [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['style']['tableLinkFields'][table]" 
+                    [nzSize]="size">
+                        <nz-option *ngFor="let option of this.tableFields[table]" 
+                        [nzLabel]="this.settestService.blocksort[table].sets['tableData']['ColumnDate'][option]['Relname']" [nzValue]="option"></nz-option>
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control [nzSpan]="12" nzOffset="8">
+                    <button nz-button [nzSize]="small" nzType="primary" (click)="onClickNext()">下一步</button>
+                </nz-form-control>
+            </nz-form-item>
+        </nz-tab>
+        <nz-tab nzTitle="操作">
+            <nz-form-item>
+                <nz-form-label nzRequired [nzSpan]="8" nzOffset="1" nzFor="button_name">默认文字</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <input nz-input formControlName="weiget_defaluttext"
+                    placeholder="请输入相关信息"
+                    [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['style']['placeholder']" 
+                     type="text" >
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">文本长度</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <nz-input-number formControlName="weiget_textlength" 
+                    [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['style']['maxlength']" 
+                    [nzMin]="1" [nzMax]="99" 
+                    
+                    [nzStep]="1"></nz-input-number>字
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">搜索方式</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzOffset="1">
+                        <nz-select formControlName="weiget_searchtype" [nzSize]="small" 
+                        nzShowSearch nzPlaceHolder="Select a type" 
+                        [(ngModel)]="this.settestService.blocksort[this.settestService.rightid].sets['style']['searchType']"
+                            >
+                            <nz-option  nzLabel="模糊查询" nzValue="like"></nz-option>
+                            <nz-option  nzLabel="精确匹配" nzValue="="></nz-option>
+                        </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+        </nz-tab>
+        <nz-tab nzTitle="样式">
+            <nz-form-item>
+                <nz-form-label nzRequired [nzSpan]="8" nzOffset="1" nzFor="button_name">文本标题</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <input nz-input formControlName="weiget_texttitle" type="text" >
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">长度</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <nz-input-number formControlName="weiget_lengthstyle" [(ngModel)]="demoValue" [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired [nzSpan]="8" nzOffset="1" nzFor="button_name">文字颜色</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <input nz-input formControlName="weiget_textcolor" type="text" >
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label nzRequired [nzSpan]="8" nzOffset="1" nzFor="button_name">边框颜色</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="1">
+                    <input nz-input formControlName="weiget_bordercolor" type="text" >
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="8" nzOffset="1" nzFor="">标题位置</nz-form-label>
+                <nz-form-control [nzSpan]="12" nzOffset="2">
+                    <nz-select formControlName="weiget_totleposition" [(ngModel)]="singleValue" [nzSize]="size">
+                        <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+                      </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="5" nzFor="button_size">输入框大小</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzOffset="4">
+                    <nz-radio-group formControlName="weiget_inputsize" 
+                    (ngModelChange)="autoSetValue('nzSize',$event,'间距：')" 
+                    [nzSize]="'small'">
+                        <label nz-radio-button nzValue="default">默认</label>
+                        <label nz-radio-button nzValue="large">大</label>
+                        <label nz-radio-button nzValue="small">小</label>
+                    </nz-radio-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="5" nzOffset="1" nzFor="button_size">搜索样式</nz-form-label>
+                <nz-form-control [nzSpan]="14" nzOffset="4">
+                    <nz-radio-group formControlName="weiget_searchstyle" 
+                    (ngModelChange)="autoSetValue('nzSize',$event,'间距：')" 
+                    [nzSize]="'small'">
+                        <label nz-radio-button nzValue="default">输入框</label>
+                        <label nz-radio-button nzValue="large">按钮</label>
+                    </nz-radio-group>
+                </nz-form-control>
+
+            </nz-form-item>
+        </nz-tab>
+    </nz-tabset>
+</form>

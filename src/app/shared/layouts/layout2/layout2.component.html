@@ -1,0 +1,48 @@
+<div style="border: #969696 1px dotted;">
+
+    <nz-tag [nzColor]="'geekblue'">编2号：{{this.id}}</nz-tag>
+    <div nz-row>
+        <div nz-col nzSpan="12" style=" border-right: #969696 1px dotted;">
+
+            <div dndDropzone class="dndList" style="width:100%;border: 0px solid black;min-height:100px;" (dndDrop)="drag.onDrop($event,settestService.blocksort[this.id].layoutdata[0],this.id) ">
+                <li dndPlaceholderRef class="dndPlaceholder"></li>
+
+
+                <!-- <div nz-row style="border: 1px solid blue;"> -->
+                <!-- <div #comps nz-col [nzSpan]="item.nzSpan" [dndDraggable]="item" [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable"
+                            (dndLinked)="onDraggableLinked($event)" (dndMoved)="drag.onDragged(item, settestService.blocksort[this.id].layoutdata[0], 'move')">
+                            <ng-container *ngComponentOutlet="drag.compshtmlcode[item.htmlcode]"></ng-container>
+
+                        </div>
+                    <!-- </div> -->
+                <!-- <ng-container *ngIf="item.isEnd">
+                        <div nz-row style="border: 1px solid blue;">
+                            <div nz-col nzSpan="24"></div>
+                        </div>
+                    </ng-container> -->
+                <div #comps *ngFor="let item of settestService.blocksort[this.id].layoutdata[0]" class="compslists" [dndDraggable]="item"
+                    [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable" (dndLinked)="onDraggableLinked($event)"
+                    (dndMoved)="drag.onDragged(item, settestService.blocksort[this.id].layoutdata[0], 'move')" (click)="this.drag.onClick(item.sysid)">
+                    <ng-container *ngComponentOutlet="drag.compshtmlcode[item.htmlcode]"></ng-container>
+                </div>
+
+
+
+            </div>
+        </div>
+        <div nz-col nzSpan="12">
+
+            <div dndDropzone class="dndList" style="width:100%;border: 0px solid black;min-height:100px;" (dndDrop)="drag.onDrop($event,settestService.blocksort[this.id].layoutdata[1],this.id) ">
+                <li dndPlaceholderRef class="dndPlaceholder"></li>
+                <div #comps *ngFor="let item of settestService.blocksort[this.id].layoutdata[1]" class="compslists" [dndDraggable]="item"
+                    [dndEffectAllowed]="item.effectAllowed" [dndDisableIf]="item.disable" (dndLinked)="onDraggableLinked($event)"
+                    (dndMoved)="drag.onDragged(item, settestService.blocksort[this.id].layoutdata[1], 'move')" (click)="this.drag.onClick(item.sysid)">
+                    <ng-container *ngComponentOutlet="drag.compshtmlcode[item.htmlcode]"></ng-container>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

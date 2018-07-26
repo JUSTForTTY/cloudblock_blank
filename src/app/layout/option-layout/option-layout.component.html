@@ -1,0 +1,9 @@
+<div class="wrapper">
+        <div class="router-progress-bar" *ngIf="isFetching"></div>
+        <app-header [isShowsideabar]="false" class="header"></app-header>
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+           
+    </div>
+    
