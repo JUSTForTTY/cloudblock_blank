@@ -8,7 +8,7 @@ import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 import { HttpService } from '@core/httpService/http.service';
 import { CacheService } from '@delon/cache';
-const loginhttpurl = "http://szcyerp.com/SUCUCloudBlockTools/v1/authlogin?refresh_time=";
+const loginhttpurl = ""+environment.SERVER_URL+"/v1/authlogin";
 @Component({
     selector: 'passport-login',
     templateUrl: './login.component.html',
@@ -129,8 +129,9 @@ export class UserLoginComponent implements OnDestroy {
                 }
                 //设置缓存
                 this.cacheService.set('userdata',userdata,{type:'s',expire:24*60*60});
-                this.router.navigate(['/options/addproj']);
+                this.router.navigate(['/default/dashboard']);
                 
+                console.log("设置成功")
           });
 
        

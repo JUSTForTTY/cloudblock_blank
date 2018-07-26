@@ -12,7 +12,7 @@ import { _HttpClient ,SettingsService} from '@delon/theme';
 import { environment } from '@env/environment';
 import { HttpService } from '@core/httpService/http.service';
 import { CacheService } from '@delon/cache';
-const loginHttpUrl = "http://szcyerp.com/SUCUCloudBlockTools/v1/authlogin?refresh_time=";
+const loginHttpUrl = ""+environment.SERVER_URL+"/v1/authlogin";
 /**
  * 默认HTTP拦截器，其注册细节见 `app.module.ts`
  */
@@ -31,6 +31,8 @@ export class DefaultInterceptor implements HttpInterceptor {
 
 
     private handleData(event: HttpResponse<any> | HttpErrorResponse): Observable<any> {
+
+        console.log("拦截操作")
         // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
         this.injector.get(_HttpClient).end();
         // 业务处理：一些通用操作
@@ -71,6 +73,7 @@ export class DefaultInterceptor implements HttpInterceptor {
    
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
+        console.log("拦截操作")
         // 统一加上服务端前缀
         let url = req.url;
         if (!url.startsWith('https://') && !url.startsWith('http://')) {

@@ -5,7 +5,7 @@
 
 export const environment = {
     chore: false,
-    SERVER_URL: `./`,
+    SERVER_URL: `http://106.14.153.167/SUCUCloudBlock`,
     production: false,
     hmr: false,
     useHash: true

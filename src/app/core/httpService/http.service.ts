@@ -70,7 +70,7 @@ export class HttpService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
   
-      
+      console.log("tuichu")
   
       // TODO: 给用户呈现错误信息
       //this.log(`${operation} failed: ${error.message}`);

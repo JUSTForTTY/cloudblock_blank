@@ -15,10 +15,6 @@ import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
 import { IndexComponent } from './index/index.component';
-import { AddProjComponent } from './add-proj/add-proj.component';
-import { BaseoptionsComponent } from './baseoptions/baseoptions.component';
-import { PagedragComponent } from './pagedrag/pagedrag.component';
-import { DragOptionsComponent } from './pagedrag/drag-options/drag-options.component';
 
 
 @NgModule({
@@ -36,10 +32,7 @@ import { DragOptionsComponent } from './pagedrag/drag-options/drag-options.compo
         Exception404Component,
         Exception500Component,
         IndexComponent,
-        AddProjComponent,
-        BaseoptionsComponent,
-        PagedragComponent,
-        DragOptionsComponent
+     
     ]
 })
 export class RoutesModule {}

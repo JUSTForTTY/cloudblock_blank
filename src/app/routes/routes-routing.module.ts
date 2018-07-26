@@ -19,12 +19,9 @@ import { CallbackComponent } from './callback/callback.component';
 import { Exception403Component } from './exception/403.component';
 import { Exception404Component } from './exception/404.component';
 import { Exception500Component } from './exception/500.component';
-
-
-import { AddProjComponent } from './add-proj/add-proj.component';
+ 
 import { IndexComponent } from './index/index.component';
-import { BaseoptionsComponent } from './baseoptions/baseoptions.component';
-import { PagedragComponent } from './pagedrag/pagedrag.component';
+ 
 const routes: Routes = [
     {
         path: 'default',
@@ -32,7 +29,7 @@ const routes: Routes = [
         children: [
             { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
             { path: 'workplace', component: DashboardWorkplaceComponent },
-            { path: 'test', loadChildren: './test/test.module#TestModule' }//test测试页面
+            { path: 'pages', loadChildren: './pages/pages.module#PagesModule' }//test测试页面
             // 业务子模块
             // { path: 'widgets', loadChildren: './widgets/widgets.module#WidgetsModule' }
         ]
@@ -42,21 +39,11 @@ const routes: Routes = [
         path: 'fullscreen',
         component: LayoutFullScreenComponent,
         children: [
-            { path: 'test', loadChildren: './test/test.module#TestModule' },
-            { path: 'pageDrag', component: PagedragComponent,data: { title: '页面拖拽配置' } }
+            { path: 'default/pages', loadChildren: './pages/pages.module#PagesModule' },
+           
         ]
     },
-    //配置布局
-    {
-        path:'options',
-        component:OptionLayoutComponent,
-        children:[
-            { path: 'addproj', component: AddProjComponent,data: { title: '项目列表' } },
-            { path: 'index', component: IndexComponent,data: { title: '首页' } },
-            { path: 'baseOptions/:type/:id', component: BaseoptionsComponent,data: { title: '基础配置' } }
-        ]
-    },
-    
+     
     // passport
     {
         path: '',
@@ -73,7 +60,7 @@ const routes: Routes = [
     { path: '403', component: Exception403Component },
     { path: '404', component: Exception404Component },
     { path: '500', component: Exception500Component },
-    { path: '**', redirectTo: 'login',pathMatch:'full' }
+    { path: '**', redirectTo: 'dashboard'}
     
 ];
 
