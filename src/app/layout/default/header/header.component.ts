@@ -2,7 +2,7 @@ import { Component, ViewChild,Input } from '@angular/core';
 import { SettingsService } from '@delon/theme';
 
 @Component({
-    selector: 'app-header',
+    selector: 'layout-header',
     templateUrl: './header.component.html'
 })
 export class HeaderComponent {
@@ -11,7 +11,7 @@ export class HeaderComponent {
      
     constructor(public settings: SettingsService) { }
 
-    toggleCollapsedSideabar() {
+    toggleCollapsedSidebar() {
         this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
     }
 

@@ -1,11 +1,20 @@
 <div class="container">
-    <div class="top">
+    <div class="wrap">
+      <div class="top">
         <div class="head">
-           
+          <img class="logo" src="./assets/img/logo-color.svg">
+          <span class="title">Ngx-Block</span>
         </div>
+        <div class="desc">创游云积木，第三世界最具影响力的软件系统</div>
+      </div>
+      <router-outlet></router-outlet>
+      <global-footer [links]="links">
+        Copyright
+        <i class="anticon anticon-copyright"></i> 2017
+        <a href="//szcyerp.com" target="_blank">创游科技</a>出品
+      </global-footer>
     </div>
-    <router-outlet></router-outlet>
-    <global-footer>
-            Copyright <i class="anticon anticon-copyright"></i>&nbsp;<a href="http://www.szcyerp.com" target="_blank">www.szcyerp.com</a>, All Rights Reserved.
-    </global-footer>
-</div>
+    
+  </div>
+   
+  

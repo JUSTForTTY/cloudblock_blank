@@ -4,7 +4,7 @@ import { CacheService } from '@delon/cache';
 @Component({
     selector: 'header-storage',
     template: `
-    <i class="anticon anticon-tool"></i>
+    <i  class="anticon anticon-tool"></i>
     清空缓存
     `,
     host: {

@@ -1,9 +1,10 @@
-<div class="wrapper">
-        <div class="router-progress-bar" *ngIf="isFetching"></div>
-        <app-header [isShowsideabar]="false" class="header"></app-header>
+
+ 
+        <div class="alain-default__progress-bar" *ngIf="isFetching"></div>
+        <layout-header class="alain-default__header" [isShowsideabar]="false" class="header"></layout-header>
         <div class="container">
             <router-outlet></router-outlet>
         </div>
            
-    </div>
+     
     

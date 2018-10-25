@@ -9,8 +9,8 @@ import { CacheService } from '@delon/cache';
     template: `
     <nz-dropdown nzPlacement="bottomRight">
         <div class="item d-flex align-items-center px-sm" nz-dropdown>
-        <nz-avatar class="mr-sm" nzSize="default" nzIcon="anticon anticon-user"></nz-avatar>
-            {{settings.user.name}}
+        <nz-avatar class="mr-sm" nzSize="default" [nzText]="settings.user.realname" style="background-color:#87d068;"></nz-avatar>
+            {{settings.user.username}}
         </div>
         <div nz-menu class="width-sm">
             <div nz-menu-item [nzDisabled]="true"><i class="anticon anticon-user mr-sm"></i>个人中心</div>
@@ -30,7 +30,18 @@ export class HeaderUserComponent implements OnInit {
 
     ngOnInit(): void {
         this.cacheService.get('userdata').subscribe((data:any)=>{
-            this.settings.setUser({name:data.username});
+            //处理姓名
+            let realname=data.realname;
+            
+            if(realname.length>=3){
+                //取姓名后两位
+                data.realname=realname.substring(realname.length-2,realname.length);
+              
+            }else{
+
+            }    
+
+            this.settings.setUser(data);
         })
 
         // this.tokenService.change().subscribe((res: any) => {

@@ -1,10 +1,10 @@
-<div class="aside-inner">
-    <nz-dropdown nzTrigger="click" class="user-block clearfix">
+<div class="alain-default__aside-inner">
+    <nz-dropdown nzTrigger="click" class="alain-default__aside-user">
         <div nz-dropdown class="user-block-dropdown">
-                <nz-avatar class="avatar" nzSize="large" nzIcon="anticon anticon-user"></nz-avatar>
-            <div class="info">
-                <strong>{{settings.user.name}}</strong>
-                <p class="text-truncate">{{settings.user.email}}</p>
+                <nz-avatar class="alain-default__aside-user-avatar"  nzSize="large" [nzText]="settings.user.realname" style="background-color:#87d068;"></nz-avatar>
+            <div class="alain-default__aside-user-info">
+                <strong>{{settings.user.username}} </strong>
+                <p class="text-truncate">{{settings.user.meno}}</p>
             </div>
         </div>
         <ul nz-menu>
@@ -15,3 +15,6 @@
     </nz-dropdown>
     <sidebar-nav class="d-block py-lg"></sidebar-nav>
 </div>
+
+ 
+  
