@@ -76,9 +76,9 @@ export class DefaultInterceptor implements HttpInterceptor {
         console.log("拦截操作")
         // 统一加上服务端前缀
         let url = req.url;
-        if (!url.startsWith('https://') && !url.startsWith('http://')) {
-            url = environment.SERVER_URL + url;//本地api不做拦截
-        }
+        // if (!url.startsWith('https://') && !url.startsWith('http://')) {
+        //     url = environment.SERVER_URL + url;//本地api不做拦截
+        // }
         
         let newReq;
             if(url!=loginHttpUrl){

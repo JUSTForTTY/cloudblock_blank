@@ -4,6 +4,11 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { TestComponent } from './test/test.component';
 
 
+
+
+
+
+
 const COMPONENT_NOROUNT = [];
 
 @NgModule({
@@ -13,7 +18,9 @@ const COMPONENT_NOROUNT = [];
   ],
   declarations: [
       ...COMPONENT_NOROUNT,
-      TestComponent
+      TestComponent,
+
+
   ],
   entryComponents: COMPONENT_NOROUNT
 })
