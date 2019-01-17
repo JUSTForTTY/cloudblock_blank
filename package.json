@@ -14,9 +14,10 @@
     "scaffold"
   ],
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "precommit": "npm run lint-staged",
     "ng": "ng",
-    "start": "ng serve  --configuration hmr -o",
+    "start": "ng serve -o",
     "serve:hmr": "ng serve -o --hmr -e=hmr",
     "build": "ng build --prod --build-optimizer",
     "analyze": "ng build --prod --build-optimizer --stats-json",
@@ -25,11 +26,9 @@
     "lint:style": "stylelint \"{src}/**/*.less\" --syntax less",
     "lint-staged": "lint-staged",
     "e2e": "ng e2e",
-    "test": "ng test -sr -sm=false",
     "test-coverage": "ng test -sr -cc -sm=false",
-    "bundle-report": "webpack-bundle-analyzer dist/stats.json",
-    "build-block": "ng build ngx-block --prod && cd dist/ngx-block && npm publish && cd ../..",
-    "build-core": "ng build ngx-block-core --prod && cd dist/ngx-block-core && npm publish && cd ../.. && npm i ngx-block-core && ng serve "
+    "debug-apk": "cordova build android --debug",
+    "gc": "cd src/app/routes/pages && ng g c"
   },
   "dependencies": {
     "@angular/animations": "~7.2.0",
