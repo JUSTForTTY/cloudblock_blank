@@ -118,7 +118,7 @@ import { LayoutModule } from './layout/layout.module';
     ...FORM_MODULES,
   ],
   providers: [
-    HttpService, UserService, JwtService, GeneralPipe,DecimalPipe,DragService, SetService, FormControlService,
+    HttpService, UserService, JwtService, GeneralPipe,DecimalPipe, SetService, FormControlService,
     ...LANG_PROVIDES,
     ...INTERCEPTOR_PROVIDES,
     ...I18NSERVICE_PROVIDES,
