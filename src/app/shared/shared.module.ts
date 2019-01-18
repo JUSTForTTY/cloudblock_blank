@@ -8,24 +8,31 @@ import { DelonABCModule } from '@delon/abc';
 import { DelonChartModule } from '@delon/chart';
 import { DelonACLModule } from '@delon/acl';
 import { DelonFormModule } from '@delon/form';
+// i18n
+import { TranslateModule } from '@ngx-translate/core';
 
-// region: third libs
+// #region third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
+import { UEditorModule } from 'ngx-ueditor';
+import { NgxTinymceModule } from 'ngx-tinymce';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { DndModule } from 'ngx-drag-drop';
+
 const THIRDMODULES = [
   NgZorroAntdModule,
   CountdownModule,
+  UEditorModule,
+  NgxTinymceModule,
   InfiniteScrollModule,
-  DndModule
+  DndModule,
 ];
-// endregion
+// #endregion
 
-// region: your componets & directives
+// #region your componets & directives
 const COMPONENTS = [];
 const DIRECTIVES = [];
-// endregion
+// #endregion
 
 @NgModule({
   imports: [
@@ -39,12 +46,12 @@ const DIRECTIVES = [];
     DelonACLModule,
     DelonFormModule,
     // third libs
-    ...THIRDMODULES
+    ...THIRDMODULES,
   ],
   declarations: [
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES
+    ...DIRECTIVES,
   ],
   exports: [
     CommonModule,
@@ -56,11 +63,13 @@ const DIRECTIVES = [];
     DelonChartModule,
     DelonACLModule,
     DelonFormModule,
+    // i18n
+    TranslateModule,
     // third libs
     ...THIRDMODULES,
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES
-  ]
+    ...DIRECTIVES,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}
