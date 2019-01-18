@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { GeneralPipe,FormControlService,HttpService, SetService, JwtService } from 'ngx-block-core';
 import { DecimalPipe } from '@angular/common';
-import { DragService } from '@shared/tool/service/drag.service';
 import { UserService } from '@core';
 
 // #region default language
