@@ -38,7 +38,7 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
   isFetching = false;
 
   constructor(
-    router: Router,
+    private router: Router,
     _message: NzMessageService,
     private resolver: ComponentFactoryResolver,
     private settings: SettingsService,
@@ -101,6 +101,7 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
   }
   handleCancel(): void {
      
+    this.router.navigate(['/default/pages',{ outlets: { modal: null }}]);
     this.layoutService.isVisible = false;
   }
 
