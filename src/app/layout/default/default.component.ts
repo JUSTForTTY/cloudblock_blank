@@ -99,6 +99,10 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
     settings.notify.pipe(takeUntil(unsubscribe$)).subscribe(() => this.setClass());
     this.setClass();
   }
+  handleCancel(): void {
+     
+    this.layoutService.isVisible = false;
+  }
 
   ngOnDestroy() {
     const { unsubscribe$ } = this;
