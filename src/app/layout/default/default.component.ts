@@ -23,7 +23,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { updateHostClass } from '@delon/util';
 import { SettingsService } from '@delon/theme';
-
+import { LayoutService } from 'ngx-block-core';
 import { environment } from '@env/environment';
 import { SettingDrawerComponent } from './setting-drawer/setting-drawer.component';
 
@@ -44,6 +44,7 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
     private settings: SettingsService,
     private el: ElementRef,
     private renderer: Renderer2,
+    public layoutService:LayoutService,
     @Inject(DOCUMENT) private doc: any,
   ) {
     // scroll to top in change page

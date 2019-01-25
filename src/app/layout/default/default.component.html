@@ -5,3 +5,13 @@
   <router-outlet></router-outlet>
 </section>
 <ng-template #settingHost></ng-template>
+<nz-modal [(nzVisible)]="layoutService.isVisible" [nzTitle]="layoutService.nzTitle" [nzWidth]="layoutService.nzWidth" [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
+  <router-outlet name="modal"></router-outlet>
+
+  <ng-template #modalFooter>
+     
+      <!-- <button nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>
+      <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Custom Submit</button> -->
+    </ng-template>
+</nz-modal>
+<nz-back-top></nz-back-top>
